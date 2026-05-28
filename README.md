@@ -8,7 +8,7 @@ Welcome! This repository contains a fully containerized ROS 2 Jazzy environment.
 Open a terminal on your host machine and clone this repo:
 ```bash
 git clone <your-repo-url>
-cd ros2-jazzy-tutorial-env
+cd ros2-jazzy-tutorial
 ```
 
 ### 2. Allow GUI Passthrough (Linux Host Only)
@@ -38,7 +38,7 @@ docker exec -it ros2_jazzy_tutorial_env bash
 ```
 
 ## 📂 Where to write your code
-Your code should go inside the `ros2_ws/src/` directory. This folder is bind-mounted from your host machine into the container. 
+Your code should go inside the `ros2_ws/src/` directory. This folder is bind-mounted from your host machine into the container.
 * This means you can use your favorite code editor (like VS Code) on your **host machine** to edit the files, and then compile/run them **inside the container**.
 * If the container is destroyed, your code is safe!
 
@@ -104,7 +104,7 @@ docker compose down
 *Explore under-the-hood configurations and performance tuning.*
 
 - [ ] Enabling topic statistics
-- [ ] Using Fast DDS Discovery Server 
+- [ ] Using Fast DDS Discovery Server
 - [ ] Implementing a custom memory allocator
 - [ ] Security tutorials (Setting up SROS2)
 - [ ] Recording a bag from a node (C++)
