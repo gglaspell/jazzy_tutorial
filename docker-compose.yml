@@ -1,0 +1,26 @@
+services:
+  ros2-tutorial:
+    build: .
+    image: ros2_jazzy_tutorials
+    container_name: ros2_jazzy_tutorial_env
+    network_mode: host
+    stdin_open: true # equivalent to docker run -i
+    tty: true        # equivalent to docker run -t
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1 # Helps prevent GUI crashing issues with X11 in Docker
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./ros2_ws:/home/ros2_ws:rw
+      
+    # ---------------------------------------------------------
+    # UNCOMMENT THE LINES BELOW IF USING AN NVIDIA GPU ON LINUX
+    # This is highly recommended for Gazebo 3D simulations
+    # ---------------------------------------------------------
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
