@@ -7,8 +7,8 @@ Welcome! This repository contains a fully containerized ROS 2 Jazzy environment.
 ### 1. Clone the repository
 Open a terminal on your host machine and clone this repo:
 ```bash
-git clone <your-repo-url>
-cd ros2-jazzy-tutorial
+git clone https://github.com/gglaspell/jazzy_tutorial.git
+cd jazzy-tutorial
 ```
 
 ### 2. Allow GUI Passthrough (Linux Host Only)
