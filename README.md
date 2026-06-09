@@ -34,7 +34,7 @@ You should now see your terminal prompt change. You are inside the container! Al
 ### 5. Opening Multiple Terminals
 ROS 2 requires running multiple nodes in separate terminals at the same time. Open a new terminal tab on your host machine and simply run the `docker exec` command again:
 ```bash
-docker exec -it ros2_jazzy_tutorial_env bash
+docker exec -it ros2_jazzy_tutorial_env /entrypoint.sh bash
 ```
 
 ## 📂 Where to write your code
