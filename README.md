@@ -90,7 +90,7 @@ docker compose down
 ### 🟠 Intermediate
 *Level up with complex system architectures and foundational tools.*
 
-- [ ] Managing dependencies with `rosdep` *(✅ Note: `rosdep init` and `update` are handled by the Dockerfile, but read this to learn how to use `rosdep install` for new packages)*
+- [x] Managing dependencies with `rosdep` *(✅ Note: `rosdep init` and `update` are handled by the Dockerfile, but read this to learn how to use `rosdep install` for new packages)*
 - [ ] Creating a custom action
 - [ ] Writing an action server and client (C++)
 - [ ] Writing an action server and client (Python)
