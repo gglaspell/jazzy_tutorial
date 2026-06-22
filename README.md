@@ -50,6 +50,69 @@ docker compose down
 
 ---
 
+## 🔐 SROS2 Security Tutorial Setup
+
+The security tutorials require a keystore and per-node enclave certificates. The `sros2/` folder contains helper scripts to set this up.
+
+> **All commands below are run inside the container** unless noted otherwise.
+
+### Step 1 — Generate the keystore and enclave keys
+
+Run the setup script once. It is safe to re-run; it skips any step that is already complete.
+
+```bash
+bash /workspace/sros2/setup_sros2.sh
+```
+
+> **Note:** The `sros2/keystore/` directory in the repo contains only a `.gitkeep` placeholder. The script detects this correctly and creates a real keystore in its place.
+
+### Step 2 — Enable security for the current terminal session
+
+Source `secure_env.sh` in **every terminal** that will run a secured node:
+
+```bash
+source /workspace/sros2/secure_env.sh
+```
+
+This sets the three required environment variables:
+
+| Variable | Value |
+|---|---|
+| `ROS_SECURITY_KEYSTORE` | absolute path to `sros2/keystore/` |
+| `ROS_SECURITY_ENABLE` | `true` |
+| `ROS_SECURITY_STRATEGY` | `Enforce` |
+
+### Step 3 — Run the talker/listener demo
+
+Open **Terminal A** inside the container, source `secure_env.sh`, then run the talker:
+
+```bash
+source /workspace/sros2/secure_env.sh
+ros2 run demo_nodes_cpp talker --ros-args --enclave /talker_listener/talker
+```
+
+Open **Terminal B** inside the container, source `secure_env.sh`, then run the listener:
+
+```bash
+source /workspace/sros2/secure_env.sh
+ros2 run demo_nodes_py listener --ros-args --enclave /talker_listener/listener
+```
+
+> **Jazzy requirement:** Enclave names must be **absolute paths** (start with `/`). Relative names like `talker_listener/talker` are rejected by the Jazzy security layer.
+>
+> **`--node-name` is not used here.** The `--ros-args --enclave` flag sets the *security enclave*, which is separate from the node name. Do not pass `--node-name` alongside `--enclave`.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| `secure_env.sh: No such file or directory` | Make sure you are using the path `/workspace/sros2/secure_env.sh` (not `sros2_demo/`) |
+| `Security directory does not exist for enclave` | Re-run `setup_sros2.sh`; confirm enclave paths start with `/` |
+| Setup script skips keystore creation even though it is empty | The fix is already applied: setup now checks for `identity_ca.cert.pem`, not just whether the folder is non-empty |
+| Nodes connect but messages are not received | Verify both terminals have `ROS_SECURITY_STRATEGY=Enforce` and the same `ROS_SECURITY_KEYSTORE` |
+
+---
+
 ## 🎓 ROS 2 Jazzy Tutorial Checklist
 
 **Primary Resource:** [Tutorials — ROS 2 Documentation: Jazzy documentation](https://docs.ros.org/en/jazzy/Tutorials.html)
@@ -106,12 +169,12 @@ docker compose down
 - [ ] Enabling topic statistics
 - [ ] Using Fast DDS Discovery Server
 - [ ] Implementing a custom memory allocator
-- [ ] Security tutorials (Setting up SROS2)
+- [ ] Security tutorials (Setting up SROS2) — see [SROS2 setup section](#-sros2-security-tutorial-setup) above
 - [ ] Recording a bag from a node (C++)
 - [ ] Reading from a bag file (C++)
 - [ ] Simulators (Connecting ROS 2 with Gazebo Harmonic)
 
-### 🔵 Demos
+### 🟣 Demos
 *See ROS 2 in action with practical, real-world examples.*
 
 - [ ] Quality of Service (QoS) features and degradation testing
