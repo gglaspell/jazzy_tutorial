@@ -12,6 +12,7 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ./ros2_ws:/home/ros2_ws:rw
+      - ./security_keystore:/home/security_keystore:rw
       
     # ---------------------------------------------------------
     # UNCOMMENT THE LINES BELOW IF USING AN NVIDIA GPU ON LINUX
